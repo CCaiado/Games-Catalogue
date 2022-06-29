@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="game_style.css">
+    <script src="games.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <div class="top-header" id="top-header"></div>
+    <div class="gallery-section">
+      <div class="inner-width" id="inner-width">
+        <image class="image" id="xbox360" src="img/xbox360.png" onclick="buttonHandler(this)"/>
+        <image class="image" id="xboxone" src="img/xboxone.png" onclick="buttonHandler(this)"/>
+        <image class="image" id="ps3" src="img/ps3.png" onclick="buttonHandler(this)"/>
+        <image class="image" id="ps4" src="img/ps4.png" onclick="buttonHandler(this)"/>
+        <button type="button" id="flex_type" onclick="buttonHandler(this)">Flex</button>
+        <button type="button" id="return" onclick="buttonHandler(this)">Return</button>
+        <div class="gallery" id="gallery">
+          <div class="overlay"></div>
+        </div>
+        <div class = "draggable_audio" id=  "draggable_audio">
+          <div class ="current_playing" id = "current_playing"></div>
+          <div class ="current_playing_controller" id = "current_playing_controller"></div>
+        </div>
+        <div class = "draggable_video" id=  "draggable_video">
+          <iframe class = "current_video" id = "current_video"
+            src="https://www.youtube.com/embed/DPf-EATqFng?" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+
+  <script>
+    $(".gallery").magnificPopup({
+      delegate: 'a',
+      type: 'image',
+      gallery:{
+        enabled: true
+      }
+    });
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+body, html {
+  height: 100%;
+  background-color: #141414;
+  background-position: center;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "montserrat",sans-serif;
+  box-sizing: border-box;
+}
+
+.top-header{
+  width: 100%;
+  height: 200px;
+  background: url(img/header_wallpaper.jpg) no-repeat 50% 50% / cover;
+}
+
+.top-header:after{
+  width: 100%;
+  height: 200px;
+  content: '';
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index:1;
+  background: linear-gradient(rgba(20,20,20,0),rgba(20,20,20,1));
+  opacity: 1;
+}
+
+.gallery-section{
+  width: 100%;
+  height: 100%;
+  padding: 60px 0;
+}
+
+.inner-width{
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.container{
+  width: 75vw;
+  height: 320px;
+  /*border-style: solid;
+  border-color: antiquewhite;*/
+  margin: auto;
+  margin-top: 60px;
+}
+
+audio { display:none;}
+
+.logo{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  height: 50px;
+  display: none;
+  -webkit-filter: drop-shadow(5px 5px 5px black);
+  filter: drop-shadow(5px 5px 5px black);
+  z-index: 1;
+  position: relative;
+}
+
+#ps3{
+  transform: scale(0.5);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+#xbox360{
+  display: block;
+  opacity: 0;
+}
+
+.wallpaper{
+  display: inline-block;
+}
+
+
+#forma{
+  position: relative;
+  display: inline-block;
+  width: 15vw;
+  height: 100%;
+  right: -5vw;
+  transform: skew(152deg,0deg);
+	transform-origin: center center;
+  overflow: hidden;
+  margin: 4px;
+  box-shadow: 8.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.7);
+  opacity: 0.6;
+  transition: all .2s ease-in-out;  
+  border-radius: 3%;
+}
+
+#forma:hover{
+  cursor: pointer;
+  transform: skew(152deg,0deg) scale(1.1);
+	transform-origin: center center;
+  opacity: 0.3;
+}
+
+#xbox360w{
+  position: relative;
+  height:100%; 
+  width: auto;
+  transform: skew(-152deg,0deg);
+  transform-origin: center center;
+  left: -16vw;
+}
+
+#xboxonew{
+  position: relative;
+  height:100%; 
+  width: auto;
+  left: -18vw;
+  transform: skew(-152deg,0deg);
+  transform-origin: center center;
+}
+
+#ps3w{
+  position: relative;
+  height:100%; 
+  width: auto;
+  left: -20vw;
+  transform: skew(-152deg,0deg);
+  transform-origin: center center;
+}
+
+#ps4w{
+  position: relative;
+  height:100%; 
+  width: auto;
+  left: -16vw;
+  transform: skew(-152deg,0deg);
+  transform-origin: center center;
+}
+
+button{
+  cursor: pointer;
+  text-align: left;
+  text-transform: uppercase;
+  border: none;
+  background-color: inherit;
+  font-size: 20px; 
+  color: white;
+  outline:none; 
+  margin-bottom: 50px;
+}
+
+/*=========================ANIMAÇÂO COMANDOS=========================*/
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*overflow: hidden;*/
+}
+
+.circles #xbox360ct{
+    position: absolute;
+    display: block;
+    width: 8%;
+    height: auto;
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.circles #ps3ct{
+  position: absolute;
+  display: block;
+  width: 6%;
+  left: 5%;
+  height: auto;
+  animation: animate 25s linear infinite;
+  bottom: -150px;
+}
+
+.circles #xbox360ct:nth-child(1){
+    left: 10%;
+    width: 10%;
+    height: auto;
+    animation-delay: 0s;
+}
+
+
+.circles #xbox360ct:nth-child(2){
+    left: 30%;
+    width: 5%;
+    height: auto;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles #xbox360ct:nth-child(3){
+    left: 50%;
+    width: 7%;
+    height: auto;
+    animation-delay: 4s;
+}
+
+.circles #xbox360ct:nth-child(4){
+    left: 70%;
+    width: 6%;
+    height: auto;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles #xbox360ct:nth-child(5){
+    left: 90%;
+    width: 5%;
+    height: auto;
+    animation-delay: 0s;
+}
+
+.circles #ps3ct:nth-child(6){
+    left: 20%;
+    width: 10%;
+    height: auto;
+    animation-delay: 3s;
+}
+
+.circles #ps3ct:nth-child(7){
+    left: 40%;
+    width: 8%;
+    height: auto;
+    animation-delay: 7s;
+}
+
+.circles #ps3ct:nth-child(8){
+    left: 60%;
+    width: 7%;
+    height: auto;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles #ps3ct:nth-child(9){
+    left: 80%;
+    width: 5%;
+    height: auto;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles #ps3ct:nth-child(10){
+    left: 75;
+    width: 5%;
+    height: auto;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
