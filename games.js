@@ -12,6 +12,7 @@ var jogos_xbox360 = ["Alone in the Dark","Army of Two","Army of Two the 40th Day
 
 var jogos_xboxone = ["Anthem", "Borderlands 3", "Call of Duty Black Ops III", "Call of Duty WWII", "Destiny", "Destiny 2", "Fallout 4", "Gears of War 4", "Hollow Knight", "Payday 2", "Sunset Overdrive", "The Elder Scrolls Online", "Titanfall", "Titanfall 2", "Yesterday Origins"];
 var xboxone_video = ["https://www.youtube.com/embed/DPf-EATqFng?", "https://www.youtube.com/embed/x4o5g_PGkiA"];
+var xbox360_video = [];
 
 var offset_top = [];
 var offset_side = [];
@@ -31,6 +32,8 @@ var logo = null;
 var last_game = null;
 var audioId = null;
 var videoId = null;
+var audio_container_html;
+var video_container_html;
 
 function main(){
 	
@@ -45,7 +48,7 @@ function main(){
 		var htmlElements="";
 		for(i=0;i<jogos_xbox360.length;i++){
 			//htmlElements+='<container class="container" id="container" onclick="playAudio('+i+')"><div class="info">'+jogos_xbox360[i]+'</div><image src="img/'+jogos_xbox360[i]+'.jpg"/></container>';
-			htmlElements+='<container class="container" id="container" onclick="playAudio('+i+')"><image class="game" id="game_'+i+'" src="img/'+jogos_xbox360[i]+'.jpg"/></container>';
+			htmlElements+='<container class="container" id="container" onclick="showContainers('+i+', this)"><image class="game" id="game_'+i+'" src="img/'+jogos_xbox360[i]+'.jpg"/></container>';
 			//htmlElements+='<container class="container" id="container" onclick="clickHandler(this)"><image src="img/'+jogos_xbox360[i]+'.jpg"/></container>';
 			//htmlElements+='<container class="container" id="container" onclick="playAudio('+i+')" onmouseout="outHandler(this)"><image src="img/'+jogos_xbox360[i]+'.jpg"/></container>';
 		}
@@ -59,44 +62,78 @@ function main(){
 		for(i=0;i<jogos_xboxone.length;i++){
 			//htmlElements+='<container class="container" id="container" onclick="playAudio('+i+')"><div class="info">'+jogos_xboxone[i]+'</div><image src="img/'+jogos_xboxone[i]+'.jpg"/><canvas class="canvas" id="canvas"></canvas></container>';
 			//htmlElements+='<container class="container" id="container" onclick="playAudio('+i+')" onmouseover="hoverHandler(this)" onmouseout="outHandler(this)"><image src="img/'+jogos_xboxone[i]+'.jpg"/></container>';
-			htmlElements+='<container class="container" id="container" onclick="playAudio('+i+', this)"><image class="game" id="game_'+i+'" src="img/'+jogos_xboxone[i]+'.jpg"/></container>';
+			htmlElements+='<container class="container" id="container" onclick="showContainers('+i+', this)"><image class="game" id="game_'+i+'" src="img/'+jogos_xboxone[i]+'.jpg"/></container>';
 		}
 	}
 
 	var gallery = document.getElementById("gallery");
 	gallery.innerHTML = htmlElements;
 
-	dragElement(document.getElementById("draggable_audio"));
-	dragElement(document.getElementById("draggable_video"));
+	//Fazer drag dos containers
+	//dragElement(document.getElementById("draggable_audio"));
+	//dragElement(document.getElementById("draggable_video"));
 }
 
-function playAudio() {
+function showContainers() {
 	change_music = 1;
-	var container1 = document.getElementById("draggable_audio");
-	var container2 = document.getElementById("draggable_video");
+	var audio_container = document.getElementById("draggable_audio");
+	var video_container = document.getElementById("draggable_video");
 
-	document.getElementById("current_video").setAttribute("src",xboxone_video[arguments[0]]);
+	//Reiniciar animações
+	audio_container.style.animation = 'none';
+	audio_container.offsetLeft; /* trigger reflow */
+	audio_container.style.animation = null; 
 
-	moveAudioContainer(container1);
-	moveVideoContainer(container2);
+	video_container.style.animation = 'none';
+	video_container.offsetHeight; /* trigger reflow */
+	video_container.style.animation = null; 
 
-	document.getElementById("current_playing_controller").style.opacity = "1";
-	document.getElementById("draggable_video").style.opacity = "1";
+
+	//Verificar se jogo é de xbox360 e tem trailer
+	if(pltf == "xbox360" && xbox360_video[arguments[0]]!=undefined){
+		document.getElementById("current_video").setAttribute("src",xbox360_video[arguments[0]]);
+		document.getElementById("current_audio_controller").style.opacity = "1";
+
+		video_container.style.display="block";
+		video_container.style.opacity = "1";
+
+		moveAudioContainer(audio_container);
+		moveVideoContainer(video_container);
+	}
+
+	//Verificar se jogo é de xboxone e tem trailer
+	else if(pltf == "xboxone" && xboxone_video[arguments[0]]!=undefined){
+		document.getElementById("current_video").setAttribute("src",xboxone_video[arguments[0]]);
+		document.getElementById("current_audio_controller").style.opacity = "1";
+
+		video_container.style.display="block";
+		video_container.style.opacity = "1";
+
+		moveAudioContainer(audio_container);
+		moveVideoContainer(video_container);
+	}
+
+	else{
+		document.getElementById("current_audio_controller").style.opacity = "1";
+		video_container.style.display="none";
+
+		moveAudioContainer(audio_container);
+	}
 
 	if(last_game != null){
 		//document.getElementById("game_" + last_game).style.opacity = "1";
 		//const container = document.getElementsByClassName("container")[last_game];
-		const container = document.getElementById("current_playing");
+		const container = document.getElementById("current_audio");
 		container.removeChild(container.lastChild);
 	}
 	last_game = arguments[0];
 
 	if(audio1 != null){
-		var current_playing_controller = document.getElementById('current_playing_controller');
-		current_playing_controller.removeChild(current_playing_controller.lastChild);
+		var current_audio_controller = document.getElementById('current_audio_controller');
+		current_audio_controller.removeChild(current_audio_controller.lastChild);
 
-		var current_playing = document.getElementById('current_playing');
-		current_playing.removeChild(current_playing.lastChild);
+		var current_audio = document.getElementById('current_audio');
+		current_audio.removeChild(current_audio.lastChild);
 
 		audio1.pause();
 	}
@@ -105,15 +142,15 @@ function playAudio() {
 	audio1.id = 'audio';
 	audio1.controls = 'controls';
 	audio1.type = 'audio/mp3';
-	document.getElementById('current_playing_controller').appendChild(audio1);
+	document.getElementById('current_audio_controller').appendChild(audio1);
 
 	if(pltf == "xbox360"){
 		audio1.src = 'music/'+jogos_xbox360[arguments[0]]+'.mp3';	 
 		logo = document.createElement("img");
 		logo.id = "logo";
 		logo.src = "logos/" + jogos_xbox360[arguments[0]] + ".png";
-		document.getElementById('current_playing').appendChild(logo); 
-		const container = document.getElementById("current_playing");
+		document.getElementById('current_audio').appendChild(logo); 
+		const container = document.getElementById("current_audio");
 		container.style.background = "url('wallpaper/"+jogos_xbox360[arguments[0]]+".jpg') no-repeat 50% 50% / cover";
 	}
 	else if(pltf == "xboxone"){
@@ -121,8 +158,8 @@ function playAudio() {
 		logo = document.createElement("img");
 		logo.id = "logo";
 		logo.src = 'logos/'+jogos_xboxone[arguments[0]]+'.png';
-		document.getElementById('current_playing').appendChild(logo);
-		const container = document.getElementById("current_playing");
+		document.getElementById('current_audio').appendChild(logo);
+		const container = document.getElementById("current_audio");
 		container.style.background = "url('wallpaper/"+jogos_xboxone[arguments[0]]+".jpg') no-repeat 50% 50% / cover";
 		//clickHandler(arguments[1]);
 	}
@@ -130,7 +167,7 @@ function playAudio() {
 	audio1.crossOrigin = "anonymous";
 	const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // for safari browser
 	
-	const container = document.getElementById("current_playing");
+	const container = document.getElementById("current_audio");
 	//const container = document.getElementsByClassName("container")[arguments[0]];
 	
 	const canvas = document.createElement("canvas");
@@ -209,34 +246,11 @@ function sleep(ms) {
 
 
 function moveAudioContainer(elem) {
-	var container = elem;
-	var pos = -220;
-	clearInterval(audioId);
-	audioId = setInterval(frame, 1);
-	function frame() {
-		if (pos >= 50) {
-			clearInterval(audioId);
-		} else {
-			pos+=4;
-			container.style.right = pos + 'px';
-		}
-	}
+	elem.style.animation = 'moveAudioLeft 1s forwards';
 }
 
 function moveVideoContainer(elem) {
-	var container = elem;
-	var pos = -240;
-
-	clearInterval(videoId);
-	videoId = setInterval(frame, 1);
-	function frame() {
-		if (pos >= 40) {
-			clearInterval(videoId);
-		} else {
-			pos+=4;
-			container.style.right = pos + 'px';
-		}
-	}
+	elem.style.animation = 'moveVideoLeft 1s forwards';
 }
 
 
@@ -345,6 +359,7 @@ function buttonHandler(element){
 }
 
 function dragElement(elmnt) {
+
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	
 	elmnt.onmousedown = dragMouseDown;
